@@ -1,7 +1,9 @@
 <template>
   <div class="project">
-    <h3>{{ project.title }}</h3>
-    <div class="details">
+    <div @click="handleClick" class="title">
+      <h3>{{ project.title }}</h3>
+    </div>
+    <div v-if="visibility" class="visibility">
       <p>{{ project.details }}</p>
     </div>
   </div>
@@ -10,6 +12,16 @@
 <script>
 export default {
   props: ["project"],
+  data() {
+    return {
+      visibility: false,
+    };
+  },
+  methods: {
+    handleClick() {
+      this.visibility = !this.visibility;
+    },
+  },
 };
 </script>
 
@@ -24,5 +36,8 @@ export default {
 }
 h3 {
   cursor: pointer;
+}
+.visibility {
+  visibility: visible;
 }
 </style>
