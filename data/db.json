@@ -11,6 +11,24 @@
       "title": "Make marketing email",
       "details": "Lorem ipsum",
       "complete": true
+    },
+    {
+      "id": 3,
+      "title": "Study",
+      "details": "Lorem ipsum",
+      "complete": true
+    },
+    {
+      "id": 4,
+      "title": "Cook",
+      "details": "Lorem ipsum",
+      "complete": false
+    },
+    {
+      "id": 5,
+      "title": "Code",
+      "details": "Lorem ipsum",
+      "complete": true
     }
   ]
 }
