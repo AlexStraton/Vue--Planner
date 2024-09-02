@@ -1,4 +1,5 @@
 <template>
+  <h1>Edit Project</h1>
   <form @submit.prevent="handleSubmit">
     <label>Title</label>
     <input v-model="title" type="text" />
@@ -7,41 +8,50 @@
     <textarea v-model="details">
 Details: 
     </textarea>
-    <button>Add Project</button>
+    <button>Update project</button>
   </form>
 </template>
 
 <script>
 export default {
-  name: "AddProject",
+  props: ["id"],
   data() {
     return {
       title: "",
-      description: "",
+      details: "",
+      uri: "http://localhost:3000/projects/" + this.id,
     };
+  },
+  async mounted() {
+    const allProjects = await fetch(this.uri);
+    const response = await allProjects.json();
+
+    this.title = response.title;
+    this.details = response.details;
   },
   methods: {
     async handleSubmit() {
+      console.log("before try");
       try {
-        const response = await fetch("http://localhost:3000/projects", {
-          method: "POST",
+        console.log("inside try");
+        const response = await fetch(this.uri, {
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            title: this.title,
-            details: this.details,
-            complete: false,
-          }),
+          body: JSON.stringify({ title: this.title, details: this.details }),
         });
-        const newProject = await response.json();
+        console.log(response, "resposne");
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const res = await response.json();
+        console.log(res);
 
-        this.$emit("post", newProject);
         this.$router.push("/");
       } catch (error) {
         console.log(error);
       }
-      (this.title = ""), (this.details = "");
     },
   },
 };

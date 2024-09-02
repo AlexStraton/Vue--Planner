@@ -3,11 +3,13 @@
     <div class="title_icons">
       <h3 @click="handleClick">{{ project.title }}</h3>
       <div class="icons">
-        <span
-          @click="handleEdit"
-          class="material-symbols-outlined material-icons"
-          >edit</span
-        >
+        <router-link :to="{ name: 'editProject', params: { id: project.id } }">
+          <span
+            @click="handleEdit"
+            class="material-symbols-outlined material-icons"
+            >edit</span
+          >
+        </router-link>
         <span
           @click="deleteProject"
           class="material-symbols-outlined material-icons">
