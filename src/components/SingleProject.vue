@@ -1,5 +1,5 @@
 <template>
-  <div class="project">
+  <div class="project" :class="{ complete: project.complete }">
     <div class="title_icons">
       <h3 @click="handleClick">{{ project.title }}</h3>
       <div class="icons">
@@ -43,15 +43,27 @@ export default {
     },
     async deleteProject() {
       try {
-        const data = await fetch(this.url, { method: "DELETE" });
+        await fetch(this.url, { method: "DELETE" });
         this.$emit("delete", this.project.id);
       } catch (error) {
         console.log(error);
       }
     },
     handleEdit() {},
-    handleTick() {
-      this.ticked = !this.ticked;
+    async handleTick() {
+      try {
+        const response = await fetch(this.url, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ complete: !this.project.complete }),
+        });
+        const updatedProject = await response.json();
+        this.$emit("patch", updatedProject);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
@@ -92,21 +104,10 @@ h3 {
 .done {
   background-color: rgba(112, 243, 89, 0.7);
 }
+.project.complete {
+  border-left: 4px solid green;
+}
+.project.complete .tick {
+  color: green;
+}
 </style>
-
-<!-- {
-  "projects": [
-    {
-      "id": 1,
-      "title": "Create new homepage banner",
-      "details": "Lorem ipsum",
-      "complete": false
-    },
-    {
-      "id": 2,
-      "title": "Make marketing email",
-      "details": "Lorem ipsum",
-      "complete": true
-    }
-  ]
-} -->

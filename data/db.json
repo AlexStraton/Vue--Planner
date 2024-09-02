@@ -1,34 +1,34 @@
 {
   "projects": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Create new homepage banner",
       "details": "Lorem ipsum",
       "complete": false
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Make marketing email",
       "details": "Lorem ipsum",
       "complete": true
     },
     {
-      "id": 3,
+      "id": "3",
       "title": "Study",
-      "details": "Lorem ipsum",
-      "complete": true
-    },
-    {
-      "id": 4,
-      "title": "Cook",
       "details": "Lorem ipsum",
       "complete": false
     },
     {
-      "id": 5,
-      "title": "Code",
+      "id": "4",
+      "title": "Cook",
       "details": "Lorem ipsum",
       "complete": true
+    },
+    {
+      "id": "5",
+      "title": "Code",
+      "details": "Lorem ipsum",
+      "complete": false
     }
   ]
 }
