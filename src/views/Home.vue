@@ -1,7 +1,8 @@
 <template>
   <div class="home">Home</div>
+  <FilterNav @filterChange="current = $event" :current="current" />
   <div v-if="projects.length">
-    <div v-for="project in projects" :key="project.id">
+    <div v-for="project in filteredProjects" :key="project.id">
       <SingleProject
         :project="project"
         @delete="handleDelete"
@@ -13,13 +14,16 @@
 
 <script>
 import SingleProject from "@/components/SingleProject.vue";
+import FilterNav from "@/components/FilterNav.vue";
 
 export default {
   name: "home",
-  components: { SingleProject },
+  components: { SingleProject, FilterNav },
   data() {
     return {
       projects: [],
+      current: "all",
+      filteredProjects: [],
     };
   },
   async mounted() {
@@ -32,7 +36,6 @@ export default {
       this.projects = this.projects.filter((project) => {
         return project.id !== id;
       });
-      console.log(this.projects);
     },
     handlePatch(updatedProject) {
       this.projects = this.projects.map((project) => {
@@ -47,6 +50,17 @@ export default {
       projects.push(newProject);
     },
   },
+  computed: {
+    filteredProjects() {
+      if (this.current === "completed") {
+        return this.projects.filter((project) => project.complete);
+      }
+      if (this.current === "ongoing") {
+        return this.projects.filter((project) => !project.complete);
+      }
+      return this.projects;
+    },
+  },
 };
 </script>
 <style scoped>
@@ -54,7 +68,7 @@ export default {
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   font-size: 3rem;
-  color: rgb(28, 73, 197);
+  color: rgb(105, 107, 112);
   font-weight: 800;
   text-align: center;
 }
